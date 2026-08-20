@@ -1,0 +1,65 @@
+<section class="formulario-contenedor">
+
+  <h2>Formulario de contacto</h2>
+
+  <form [formGroup]="formulario" (ngSubmit)="enviar()">
+
+    <div class="campo">
+      <label for="nombre">Nombre</label>
+
+      <input
+        id="nombre"
+        type="text"
+        formControlName="nombre"
+        placeholder="Escribe tu nombre"
+      >
+
+      <div
+        class="error"
+        *ngIf="hasError('nombre', 'required')"
+      >
+        El nombre es obligatorio.
+      </div>
+
+      <div
+        class="error"
+        *ngIf="hasError('nombre', 'longitudPersonalizada')"
+      >
+        El nombre debe tener al menos 3 caracteres.
+      </div>
+    </div>
+
+
+    <div class="campo">
+      <label for="comentario">Comentario</label>
+
+      <input
+        id="comentario"
+        type="text"
+        formControlName="comentario"
+        placeholder="Escribe un comentario"
+      >
+
+      <div
+        class="error"
+        *ngIf="hasError('comentario', 'required')"
+      >
+        El comentario es obligatorio.
+      </div>
+
+      <div
+        class="error"
+        *ngIf="hasError('comentario', 'longitudPersonalizada')"
+      >
+        El comentario debe tener al menos 10 caracteres.
+      </div>
+    </div>
+
+
+    <button type="submit">
+      Enviar
+    </button>
+
+  </form>
+
+</section>

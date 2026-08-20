@@ -1,0 +1,20 @@
+<section class="inicio">
+
+  <h2>Bienvenido</h2>
+
+  <p>
+    Esta pantalla contiene al componente padre.
+  </p>
+
+  <app-formulario
+    (formularioEnviado)="recibirFormulario($event)"
+  ></app-formulario>
+
+  <p
+    class="mensaje"
+    *ngIf="mensajeRecibido"
+  >
+    {{ mensajeRecibido }}
+  </p>
+
+</section>

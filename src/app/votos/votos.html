@@ -1,0 +1,48 @@
+<section class="votos">
+
+  <h2>Votación</h2>
+
+  <p>
+    Vota a favor o en contra de cada elemento.
+  </p>
+
+  <div class="agregar">
+    <input
+      type="text"
+      [(ngModel)]="nuevoElemento"
+      placeholder="Nuevo elemento"
+    >
+
+    <button type="button" (click)="agregar()">
+      Agregar
+    </button>
+  </div>
+
+  <div *ngFor="let elemento of elementos$ | async" class="elemento">
+
+    <h3>{{ elemento.nombre }}</h3>
+
+    <button
+      type="button"
+      (click)="votarPositivo(elemento.id)"
+    >
+      👍 A favor: {{ elemento.votosPositivos }}
+    </button>
+
+    <button
+      type="button"
+      (click)="votarNegativo(elemento.id)"
+    >
+      👎 En contra: {{ elemento.votosNegativos }}
+    </button>
+
+    <button
+      type="button"
+      (click)="borrar(elemento.id)"
+    >
+      Borrar
+    </button>
+
+  </div>
+
+</section>
