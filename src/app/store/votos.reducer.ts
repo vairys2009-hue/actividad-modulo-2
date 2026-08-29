@@ -1,9 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
+
 import {
   agregarElemento,
   borrarElemento,
   votoPositivo,
-  votoNegativo
+  votoNegativo,
+  bicicletaAgregada
 } from './votos.actions';
 
 export interface ElementoVoto {
@@ -13,8 +15,15 @@ export interface ElementoVoto {
   votosNegativos: number;
 }
 
+export interface BicicletaEstado {
+  id: number;
+  modelo: string;
+  color: string;
+}
+
 export interface VotosState {
   elementos: ElementoVoto[];
+  bicicletas: BicicletaEstado[];
 }
 
 export const initialState: VotosState = {
@@ -37,7 +46,9 @@ export const initialState: VotosState = {
       votosPositivos: 0,
       votosNegativos: 0
     }
-  ]
+  ],
+
+  bicicletas: []
 };
 
 export const votosReducer = createReducer(
@@ -58,7 +69,9 @@ export const votosReducer = createReducer(
 
   on(borrarElemento, (state, { id }) => ({
     ...state,
-    elementos: state.elementos.filter(elemento => elemento.id !== id)
+    elementos: state.elementos.filter(
+      elemento => elemento.id !== id
+    )
   })),
 
   on(votoPositivo, (state, { id }) => ({
@@ -83,5 +96,13 @@ export const votosReducer = createReducer(
           }
         : elemento
     )
+  })),
+
+  on(bicicletaAgregada, (state, { bicicleta }) => ({
+    ...state,
+    bicicletas: [
+      ...state.bicicletas,
+      bicicleta
+    ]
   }))
 );

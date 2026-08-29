@@ -10,6 +10,13 @@ import { FormularioComponent } from './formulario/formulario';
 import { Votos } from './votos/votos';
 import { votosReducer } from './store/votos.reducer';
 
+import { APP_CONFIG, APP_CONFIG_VALUE } from './config';
+import { Notificador } from './services/notificador';
+import { NotificadorConsolaService } from './services/notificador-consola.service';
+import { NotificadorBaseService } from './services/notificador-base.service';
+import { NotificadorDetalleService } from './services/notificador-detalle.service';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     App,
@@ -17,16 +24,40 @@ import { votosReducer } from './store/votos.reducer';
     FormularioComponent,
     Votos
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
+
     StoreModule.forRoot({
       votos: votosReducer
     })
   ],
-  providers: [provideBrowserGlobalErrorListeners()],
-  bootstrap: [App],
+
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+
+    {
+      provide: APP_CONFIG,
+      useValue: APP_CONFIG_VALUE
+    },
+
+    {
+      provide: Notificador,
+      useClass: NotificadorConsolaService
+    },
+
+    NotificadorDetalleService,
+
+    {
+      provide: NotificadorBaseService,
+      useExisting: NotificadorDetalleService
+    }
+  ],
+
+  bootstrap: [App]
 })
 export class AppModule {}

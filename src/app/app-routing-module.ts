@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './inicio/inicio';
 import { FormularioComponent } from './formulario/formulario';
 import { Votos } from './votos/votos';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -20,9 +21,10 @@ const routes: Routes = [
     component: FormularioComponent
   },
   {
-    path: 'votos',
-    component: Votos
-  }
+  path: 'votos',
+  component: Votos,
+  canActivate: [authGuard]
+}
 ];
 
 @NgModule({

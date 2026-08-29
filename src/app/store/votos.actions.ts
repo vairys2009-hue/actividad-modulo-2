@@ -19,3 +19,14 @@ export const votoNegativo = createAction(
   '[Votos] Voto negativo',
   props<{ id: number }>()
 );
+
+export const bicicletaAgregada = createAction(
+  '[Bicicletas API] Bicicleta agregada',
+  props<{
+    bicicleta: {
+      id: number;
+      modelo: string;
+      color: string;
+    };
+  }>()
+);
