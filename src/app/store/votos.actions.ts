@@ -30,3 +30,8 @@ export const bicicletaAgregada = createAction(
     };
   }>()
 );
+
+export const registrarClick = createAction(
+  '[Tracking] Registrar click',
+  props<{ etiqueta: string }>()
+);

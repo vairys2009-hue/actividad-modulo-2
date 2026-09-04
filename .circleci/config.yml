@@ -1,0 +1,38 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:22.14-browsers
+
+    steps:
+      - checkout
+
+      - run:
+          name: Instalar dependencias
+          command: npm ci
+
+      - run:
+          name: Compilar Angular
+          command: npx ng build
+
+      - run:
+          name: Ejecutar pruebas Jasmine
+          command: npx ng test --watch=false
+
+      - run:
+          name: Iniciar aplicación Angular
+          command: npx ng serve --host 0.0.0.0 > ng-serve.log 2>&1 &
+
+      - run:
+          name: Esperar a Angular
+          command: sleep 10
+
+      - run:
+          name: Ejecutar pruebas Cypress
+          command: npx cypress run
+
+workflows:
+  build-and-test:
+    jobs:
+      - build

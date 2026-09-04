@@ -5,8 +5,13 @@ import { InicioComponent } from './inicio/inicio';
 import { FormularioComponent } from './formulario/formulario';
 import { Votos } from './votos/votos';
 import { authGuard } from './guards/auth.guard';
+import { MapaComponent } from './mapa/mapa';
 
 const routes: Routes = [
+{
+  path: 'mapa',
+  component: MapaComponent
+},
   {
     path: '',
     redirectTo: 'inicio',

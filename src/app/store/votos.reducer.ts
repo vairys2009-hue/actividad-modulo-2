@@ -5,7 +5,8 @@ import {
   borrarElemento,
   votoPositivo,
   votoNegativo,
-  bicicletaAgregada
+  bicicletaAgregada,
+  registrarClick
 } from './votos.actions';
 
 export interface ElementoVoto {
@@ -21,9 +22,14 @@ export interface BicicletaEstado {
   color: string;
 }
 
+export interface TrackingEstado {
+  [etiqueta: string]: number;
+}
+
 export interface VotosState {
   elementos: ElementoVoto[];
   bicicletas: BicicletaEstado[];
+  tracking: TrackingEstado;
 }
 
 export const initialState: VotosState = {
@@ -48,7 +54,9 @@ export const initialState: VotosState = {
     }
   ],
 
-  bicicletas: []
+  bicicletas: [],
+
+  tracking: {}
 };
 
 export const votosReducer = createReducer(
@@ -104,5 +112,13 @@ export const votosReducer = createReducer(
       ...state.bicicletas,
       bicicleta
     ]
+  })),
+
+  on(registrarClick, (state, { etiqueta }) => ({
+    ...state,
+    tracking: {
+      ...state.tracking,
+      [etiqueta]: (state.tracking[etiqueta] || 0) + 1
+    }
   }))
 );

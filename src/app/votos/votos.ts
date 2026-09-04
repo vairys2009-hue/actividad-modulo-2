@@ -23,12 +23,20 @@ interface AppState {
 export class Votos {
 
   elementos$;
+  tracking$;
 
   nuevoElemento = '';
 
+  idAnimado: number | null = null;
+
   constructor(private store: Store<AppState>) {
+
     this.elementos$ = this.store.select(
       (state: AppState) => state.votos.elementos
+    );
+
+    this.tracking$ = this.store.select(
+      (state: AppState) => state.votos.tracking
     );
   }
 
@@ -40,11 +48,24 @@ export class Votos {
     }
 
     this.store.dispatch(agregarElemento({ nombre }));
+
     this.nuevoElemento = '';
   }
 
   votarPositivo(id: number): void {
     this.store.dispatch(votoPositivo({ id }));
+
+    this.idAnimado = null;
+
+    setTimeout(() => {
+      this.idAnimado = id;
+    }, 0);
+
+    setTimeout(() => {
+      if (this.idAnimado === id) {
+        this.idAnimado = null;
+      }
+    }, 500);
   }
 
   votarNegativo(id: number): void {

@@ -40,6 +40,7 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -78,8 +79,9 @@
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
+
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
@@ -91,6 +93,19 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "buildTarget": "actividad-modulo-2:build:development",
+            "tsConfig": "tsconfig.spec.json",
+            "runner": "karma",
+            "browsers": [
+              "ChromeHeadless"
+            ],
+            "watch": false
+          }
         }
       }
     }

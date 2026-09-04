@@ -7,30 +7,50 @@
   </p>
 
   <div class="agregar">
+
     <input
       type="text"
       [(ngModel)]="nuevoElemento"
       placeholder="Nuevo elemento"
     >
 
-    <button type="button" (click)="agregar()">
+    <button
+      type="button"
+      appTrackClick
+      data-tracking-tag="agregar-elemento"
+      (click)="agregar()"
+    >
       Agregar
     </button>
+
   </div>
 
-  <div *ngFor="let elemento of elementos$ | async" class="elemento">
+  <div
+    *ngFor="let elemento of elementos$ | async"
+    class="elemento"
+  >
 
     <h3>{{ elemento.nombre }}</h3>
 
     <button
       type="button"
+      appTrackClick
+      data-tracking-tag="voto-positivo"
       (click)="votarPositivo(elemento.id)"
     >
-      👍 A favor: {{ elemento.votosPositivos }}
+      👍 A favor:
+
+      <span
+        [class.contador-animado]="idAnimado === elemento.id"
+      >
+        {{ elemento.votosPositivos }}
+      </span>
     </button>
 
     <button
       type="button"
+      appTrackClick
+      data-tracking-tag="voto-negativo"
       (click)="votarNegativo(elemento.id)"
     >
       👎 En contra: {{ elemento.votosNegativos }}
@@ -38,10 +58,46 @@
 
     <button
       type="button"
+      appTrackClick
+      data-tracking-tag="borrar-elemento"
       (click)="borrar(elemento.id)"
     >
       Borrar
     </button>
+
+  </div>
+
+  <div class="tracking">
+
+    <h3>Estadísticas de clics</h3>
+
+    <p>
+      Los clics registrados por la directiva se actualizan mediante Redux.
+    </p>
+
+    <div *ngIf="tracking$ | async as tracking">
+
+      <p>
+        🟢 Agregar elemento:
+        <strong>{{ tracking['agregar-elemento'] || 0 }}</strong>
+      </p>
+
+      <p>
+        👍 Votos positivos:
+        <strong>{{ tracking['voto-positivo'] || 0 }}</strong>
+      </p>
+
+      <p>
+        👎 Votos negativos:
+        <strong>{{ tracking['voto-negativo'] || 0 }}</strong>
+      </p>
+
+      <p>
+        🗑️ Elementos borrados:
+        <strong>{{ tracking['borrar-elemento'] || 0 }}</strong>
+      </p>
+
+    </div>
 
   </div>
 

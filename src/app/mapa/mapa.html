@@ -1,0 +1,49 @@
+<div class="mapa-contenedor">
+
+  <h1>Mapa de bicicletas 🚲</h1>
+
+  <p class="descripcion">
+    Haz clic en el marcador para consultar la bicicleta disponible.
+  </p>
+
+  <mgl-map
+    [style]="mapaEstilo"
+    [zoom]="zoom"
+    [center]="centro">
+
+    <mgl-marker
+      [lngLat]="[bicicleta.longitud, bicicleta.latitud]">
+
+      <div
+        class="marcador"
+        (click)="mostrarPopup()">
+        🚲
+      </div>
+
+    </mgl-marker>
+
+    <mgl-popup
+      *ngIf="mostrarMensaje"
+      [lngLat]="[bicicleta.longitud, bicicleta.latitud]"
+      [closeOnClick]="false"
+      (close)="cerrarPopup()">
+
+      <div class="popup-contenido">
+        <h3>{{ bicicleta.nombre }}</h3>
+
+        <p>
+          Esta bicicleta está disponible en esta ubicación.
+        </p>
+
+        <button
+          type="button"
+          (click)="cerrarPopup()">
+          Cerrar
+        </button>
+      </div>
+
+    </mgl-popup>
+
+  </mgl-map>
+
+</div>
